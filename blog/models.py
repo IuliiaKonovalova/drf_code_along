@@ -13,6 +13,11 @@ class Category(models.Model):
 
 class Post(models.Model):
     """Post model"""
+    class PostObjects(models.Manager):
+        """Post manager"""
+        def get_queryset(self):
+            return super().get_queryset().filter(status='published')
+    # Options
     options = (
         ('draft', 'Draft'),
         ('published', 'Published'),
@@ -33,3 +38,11 @@ class Post(models.Model):
         choices=options,
         default='published'
     )
+    objects = models.Manager()  # The default manager.
+    postobjects = PostObjects()  # The custom manager.
+
+    class Meta:
+        ordering = ('-published',)
+
+    def __str__(self):
+        return self.title
