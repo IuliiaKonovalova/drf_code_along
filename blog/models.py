@@ -49,5 +49,5 @@ class Post(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name, allow_unicode=True)
+        self.slug = slugify(self.title, allow_unicode=True)
         super().save(*args, **kwargs)
